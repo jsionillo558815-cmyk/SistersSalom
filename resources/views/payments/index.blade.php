@@ -20,7 +20,7 @@
 
             {{-- Filter --}}
             <form method="GET" class="flex gap-3 items-center flex-wrap">
-                <select name="status" class="salon-input px-4 py-2 text-sm">
+                <select name="status" class="salon-filter-select">
                     <option value="">All Statuses</option>
                     <option value="paid"   {{ request('status') === 'paid'   ? 'selected' : '' }}>Paid</option>
                     <option value="unpaid" {{ request('status') === 'unpaid' ? 'selected' : '' }}>Unpaid</option>

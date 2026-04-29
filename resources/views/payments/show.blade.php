@@ -77,7 +77,7 @@
                     <form action="{{ route('payments.updateStatus', $payment) }}" method="POST"
                           class="flex gap-3 items-center flex-wrap">
                         @csrf @method('PATCH')
-                        <select name="status" class="salon-input px-4 py-2.5 text-sm">
+                        <select name="status" class="salon-filter-select">
                             <option value="paid"   {{ $payment->status === 'paid'   ? 'selected' : '' }}>Paid</option>
                             <option value="unpaid" {{ $payment->status === 'unpaid' ? 'selected' : '' }}>Unpaid</option>
                         </select>

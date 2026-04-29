@@ -25,9 +25,8 @@
             <form method="GET" class="flex gap-3 flex-wrap items-center">
                 <input name="search" type="text" placeholder="Search customer..."
                        value="{{ request('search') }}"
-                       class="salon-input px-4 py-2 w-56 text-sm">
-                <select name="status"
-                        class="salon-input px-4 py-2 text-sm">
+                       class="salon-filter-input">
+                <select name="status" class="salon-filter-select">
                     <option value="">All Statuses</option>
                     @foreach(['pending','confirmed','completed','cancelled'] as $s)
                         <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>
@@ -37,8 +36,7 @@
                 </select>
                 <button type="submit" class="salon-btn-primary px-5 py-2.5 text-sm">Filter</button>
                 @if(request()->hasAny(['search','status']))
-                    <a href="{{ route('appointments.index') }}"
-                       class="salon-btn-secondary text-sm">
+                    <a href="{{ route('appointments.index') }}" class="salon-btn-secondary text-sm">
                         Clear
                     </a>
                 @endif
