@@ -28,7 +28,7 @@ class ServiceController extends Controller
             'is_active'        => 'sometimes|boolean',
         ]);
 
-        $data['is_active'] = $request->boolean('is_active', true);
+        $data['is_active'] = $request->has('is_active');
 
         Service::create($data);
 
@@ -51,7 +51,7 @@ class ServiceController extends Controller
             'is_active'        => 'sometimes|boolean',
         ]);
 
-        $data['is_active'] = $request->boolean('is_active', false);
+        $data['is_active'] = $request->has('is_active');
 
         $service->update($data);
 

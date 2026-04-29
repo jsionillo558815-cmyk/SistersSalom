@@ -1,4 +1,4 @@
-<!-- <x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('services.index') }}" class="text-gray-500 hover:text-indigo-600 transition-colors font-medium text-sm">
@@ -60,7 +60,7 @@
                             <div class="relative flex items-center justify-center">
                                 <input type="checkbox" id="is_active" name="is_active" value="1"
                                     class="salon-toggle-input peer sr-only"
-                                    {{ old('is_active', $service->is_active) ? 'checked' : '' }}>
+                                    {{ old('_token') ? (old('is_active') ? 'checked' : '') : ($service->is_active ? 'checked' : '') }}>
                                 <div class="salon-toggle-track"></div>
                                 <div class="salon-toggle-thumb"></div>
                             </div>
@@ -80,4 +80,4 @@
             </div>
         </div>
     </div>
-</x-app-layout> -->
+</x-app-layout>

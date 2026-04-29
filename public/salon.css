@@ -12,7 +12,13 @@ h1, h2, h3, h4, h5, h6,
 }
 
 body, .min-h-screen {
-    background-color: #f3e8ff !important;
+    background-color: #ffc7fd !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    body, .min-h-screen {
+        background-color: #eacdf2dc !important;
+    }
 }
 
 .salon-text-gradient {
@@ -363,13 +369,11 @@ body, .min-h-screen {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.salon-toggle-input:checked
-.salon-toggle-track {
+.salon-toggle-input:checked ~ .salon-toggle-track {
     background-color: #9333ea;
 }
 
-.salon-toggle-input:checked 
-.salon-toggle-thumb {
+.salon-toggle-input:checked ~ .salon-toggle-thumb {
     transform: translateX(1.25rem);
 }
 
@@ -399,9 +403,9 @@ body, .min-h-screen {
 
 @media (prefers-color-scheme: dark) {
     .salon-alert-success {
-        background-color: rgba(6, 78, 59, 0.3);
+        background-color: #064e3b;
         border-color: #065f46;
-        color: #34d399;
+        color: #a7f3d0;
     }
 }
 

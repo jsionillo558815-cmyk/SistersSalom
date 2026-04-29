@@ -13,7 +13,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
 
             @if(session('success'))
-                <div class="px-4 py-3 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded">
+                <div class="salon-alert-success px-6 py-4 mb-4 animate-fade-in-up">
                     {{ session('success') }}
                 </div>
             @endif
