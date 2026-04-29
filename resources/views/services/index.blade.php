@@ -1,15 +1,17 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-bold text-2xl salon-text-gradient leading-tight tracking-tight">
-                Services Management
-            </h2>
-            <a href="{{ route('services.create') }}" class="salon-btn-primary px-5 py-2.5 text-sm">
-                Add Service
-            </a>
-        </div>
-    </x-slot>
+@extends('layouts.app')
 
+@section('header')
+    <div class="flex justify-between items-center">
+        <h2 class="font-bold text-2xl salon-text-gradient leading-tight tracking-tight">
+            Services Management
+        </h2>
+        <a href="{{ route('services.create') }}" class="salon-btn-primary px-5 py-2.5 text-sm">
+            Add Service
+        </a>
+    </div>
+@endsection
+
+@section('content')
     <div class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
@@ -108,4 +110,4 @@
 
         </div>
     </div>
-</x-app-layout>
+@endsection
