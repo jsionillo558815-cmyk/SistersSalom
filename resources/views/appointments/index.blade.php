@@ -1,84 +1,122 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Appointments</h2>
-            <a href="{{ route('appointments.create') }}"
-               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded">
-                New Appointment
-            </a>
-        </div>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
+@section('header')
+    <div class="flex justify-between items-center">
+        <h2 class="font-bold text-2xl salon-text-gradient leading-tight tracking-tight">
+            Appointments
+        </h2>
+        <a href="{{ route('appointments.create') }}" class="salon-btn-primary px-5 py-2.5 text-sm">
+            New Appointment
+        </a>
+    </div>
+@endsection
+
+@section('content')
+    <div class="py-10">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             @if(session('success'))
-                <div class="salon-alert-success px-6 py-4 mb-4 animate-fade-in-up">
+                <div class="salon-alert-success px-6 py-4 animate-fade-in-up">
                     {{ session('success') }}
                 </div>
             @endif
 
             {{-- Filters --}}
-            <form method="GET" class="flex gap-3 flex-wrap">
-                <x-text-input name="search" placeholder="Search customer..." value="{{ request('search') }}" class="w-56" />
+            <form method="GET" class="flex gap-3 flex-wrap items-center">
+                <input name="search" type="text" placeholder="Search customer..."
+                       value="{{ request('search') }}"
+                       class="salon-input px-4 py-2 w-56 text-sm">
                 <select name="status"
-                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                        class="salon-input px-4 py-2 text-sm">
                     <option value="">All Statuses</option>
                     @foreach(['pending','confirmed','completed','cancelled'] as $s)
-                        <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
+                        <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>
+                            {{ ucfirst($s) }}
+                        </option>
                     @endforeach
                 </select>
-                <x-primary-button>Filter</x-primary-button>
+                <button type="submit" class="salon-btn-primary px-5 py-2.5 text-sm">Filter</button>
                 @if(request()->hasAny(['search','status']))
                     <a href="{{ route('appointments.index') }}"
-                       class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded hover:bg-gray-200">
+                       class="salon-btn-secondary text-sm">
                         Clear
                     </a>
                 @endif
             </form>
 
-            <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-700">
+            <div class="salon-card">
+                <div class="salon-table-container">
+                    <table class="salon-table">
+                        <thead class="salon-table-header">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">#</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Customer</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Service</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Schedule</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Price</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                                <th>#</th>
+                                <th>Customer</th>
+                                <th>Service</th>
+                                <th>Schedule</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody class="salon-table-body">
                             @forelse($appointments as $appt)
-                                <tr>
-                                    <td class="px-6 py-3 text-sm text-gray-600 dark:text-gray-400">{{ $appointments->firstItem() + $loop->index }}</td>
-                                    <td class="px-6 py-3">
-                                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $appt->customer_name }}</div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400">{{ $appt->customer_phone }}</div>
+                                <tr class="salon-table-row">
+                                    <td class="salon-text-muted">
+                                        {{ $appointments->firstItem() + $loop->index }}
                                     </td>
-                                    <td class="px-6 py-3 text-sm text-gray-700 dark:text-gray-300">{{ $appt->service->name }}</td>
-                                    <td class="px-6 py-3 text-sm text-gray-600 dark:text-gray-400">{{ $appt->scheduled_at->format('M d, Y h:i A') }}</td>
-                                    <td class="px-6 py-3 text-sm text-gray-800 dark:text-gray-200">&#8369;{{ number_format($appt->service->price, 2) }}</td>
-                                    <td class="px-6 py-3 text-sm">
+                                    <td>
+                                        <div class="flex items-center gap-3">
+                                            <div class="salon-avatar w-9 h-9 text-sm">
+                                                {{ substr($appt->customer_name, 0, 1) }}
+                                            </div>
+                                            <div>
+                                                <div class="salon-text-bold">{{ $appt->customer_name }}</div>
+                                                <div class="salon-text-muted text-xs mt-0.5">{{ $appt->customer_phone }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="salon-text-muted">
+                                        {{ $appt->service?->name ?? '(Service removed)' }}
+                                    </td>
+                                    <td class="salon-text-muted">
+                                        {{ $appt->scheduled_at->format('M d, Y h:i A') }}
+                                    </td>
+                                    <td class="salon-text-bold">
+                                        &#8369;{{ number_format($appt->service?->price ?? 0, 2) }}
+                                    </td>
+                                    <td>
                                         @include('partials.status-badge', ['status' => $appt->status])
                                     </td>
-                                    <td class="px-6 py-3 text-sm space-x-2">
-                                        <a href="{{ route('appointments.show', $appt) }}" class="text-indigo-600 hover:underline">View</a>
-                                        <a href="{{ route('appointments.edit', $appt) }}" class="text-yellow-600 hover:underline">Edit</a>
-                                        <form action="{{ route('appointments.destroy', $appt) }}" method="POST" class="inline"
-                                              onsubmit="return confirm('Delete this appointment?')">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:underline">Delete</button>
-                                        </form>
+                                    <td>
+                                        <div class="flex items-center gap-3">
+                                            <a href="{{ route('appointments.show', $appt) }}" class="salon-link text-sm">
+                                                View
+                                            </a>
+                                            <a href="{{ route('appointments.edit', $appt) }}"
+                                               class="p-2 text-amber-600 hover:text-amber-900 hover:bg-amber-50 dark:text-amber-400 dark:hover:bg-amber-900/30 rounded-lg transition-colors font-medium text-sm">
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('appointments.destroy', $appt) }}" method="POST" class="inline"
+                                                  onsubmit="return confirm('Delete this appointment?')">
+                                                @csrf @method('DELETE')
+                                                <button type="submit"
+                                                        class="p-2 text-rose-600 hover:text-rose-900 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-900/30 rounded-lg transition-colors font-medium text-sm">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
-                                        No appointments found.
+                                    <td colspan="7">
+                                        <div class="salon-empty-state">
+                                            <p class="salon-empty-title">No appointments found.</p>
+                                            <a href="{{ route('appointments.create') }}"
+                                               class="mt-2 text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 font-medium hover:underline inline-flex items-center gap-1">
+                                                Create your first appointment
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforelse
@@ -86,7 +124,7 @@
                     </table>
                 </div>
                 @if($appointments->hasPages())
-                    <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                    <div class="salon-pagination">
                         {{ $appointments->links() }}
                     </div>
                 @endif
@@ -94,4 +132,4 @@
 
         </div>
     </div>
-</x-app-layout>
+@endsection

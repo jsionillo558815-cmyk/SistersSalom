@@ -76,7 +76,7 @@
                                             </div>
                                         </td>
                                         <td class="salon-text-muted">
-                                            {{ $appointment->service->name }}
+                                            {{ $appointment->service?->name ?? '(Service removed)' }}
                                         </td>
                                         <td class="salon-text-muted">
                                             <div class="flex items-center gap-2">
