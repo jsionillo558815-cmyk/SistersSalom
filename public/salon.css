@@ -471,23 +471,27 @@ select.salon-input {
 }
 
 .salon-alert-success {
-    background-color: #ecfdf5;
-    border: 1px solid #a7f3d0;
-    color: #047857;
+    background-color: #dcfce7;
+    border: 1px solid #86efac;
+    border-left: 4px solid #16a34a;
+    color: #14532d;
     border-radius: 0.75rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.15), 0 2px 4px -1px rgba(22, 163, 74, 0.08);
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    font-weight: 600;
 }
 
 @media (prefers-color-scheme: dark) {
     .salon-alert-success {
-        background-color: #064e3b;
-        border-color: #065f46;
-        color: #a7f3d0;
+        background-color: rgba(20, 83, 45, 0.5);
+        border-color: #166534;
+        border-left-color: #4ade80;
+        color: #bbf7d0;
     }
 }
+
 
 .salon-card-header {
     padding: 1.25rem 2rem;
